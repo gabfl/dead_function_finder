@@ -1,7 +1,9 @@
 
 import argparse
 
-from .modules.function_finder import find_all_functions_in_path
+from .modules.directory_parser import parse
+from .modules.function_finder import find_all_functions
+from .modules.function_search import iterate_and_search
 
 
 def main():
@@ -13,18 +15,34 @@ def main():
                         choices=['python', 'php'], default='python')
     parser.add_argument(
         "-p", "--path", help="Path to directory", required=True)
+    parser.add_argument(
+        "-x", "--exclude", help="Exclude a file or directory pattern, (comma separated")
     args = parser.parse_args()
 
     # Define extension
     extension = '.py' if args.language == 'python' else '.php'
 
-    functions_by_file = find_all_functions_in_path(args.path, extension)
+    # List filenames
+    all_files = [x for x in parse(args.path, extension, args.exclude)]
+
+    # Search all functions by filenames
+    functions_by_file = find_all_functions(all_files, args.language)
     functions_count = sum(len(v) for v in functions_by_file.values())
     print(' * Found {} functions in {} files.'.format("{:,.0f}".format(functions_count),
                                                       "{:,.0f}".format(len(functions_by_file))))
 
-    # print(all_functions)
-    # print(len(all_functions))
+    # Search all functions in all files
+    for file in functions_by_file:
+        # All functions in file
+        functions = functions_by_file[file]
+
+        # Loop through all functions
+        for function in functions:
+            res = iterate_and_search(function, all_files, args.language)
+
+            if not res:
+                print(' * Function {} not found in any file.'.format(function))
+
     return None
 
 

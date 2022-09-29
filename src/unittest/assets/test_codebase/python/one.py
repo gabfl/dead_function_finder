@@ -2,7 +2,7 @@ def some_function():
     return 'Hello World!'
 
 
-def some_other_function(int a, int b):
+def some_other_function(a, b):
     return 'Hello World!'
 
 
