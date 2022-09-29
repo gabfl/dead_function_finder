@@ -1,5 +1,7 @@
 import re
 
+from .supported_languages import get_search_pattern
+
 
 def search_function_in_file(function_name, file_path, language='python'):
     """ Return a list of functions within a file """
@@ -11,14 +13,10 @@ def search_function_in_file(function_name, file_path, language='python'):
         except UnicodeDecodeError:
             return None
 
-    # define start
-    if language == 'python':
-        start = r'(\.|\s)'
-    elif language == 'php':
-        start = r'(>|::)'
+    start, end = get_search_pattern(language)
 
     # Find all functions
-    found = re.search('>' + function_name + '(\s)?\(', file_content)
+    found = re.search(start + function_name + end, file_content)
 
     return True if found else False
 

@@ -2,8 +2,10 @@ import glob
 import re
 import os
 
+from .supported_languages import get_extension
 
-def parse(path, extension='.py', exclude=None):
+
+def parse(path, language='python', exclude=None):
     """ Return a recursive list of files within a directory """
 
     # Add optional /
@@ -18,7 +20,7 @@ def parse(path, extension='.py', exclude=None):
         raise FileNotFoundError
 
     # absolute path to search all text files inside a specific folder
-    path = path + r'**/*' + extension
+    path = path + r'**/*' + get_extension(language)
     files = glob.glob(path, recursive=True)
 
     exclusions = (exclude).split(',') if exclude else []

@@ -19,11 +19,8 @@ def main():
         "-x", "--exclude", help="Exclude a file or directory pattern, (comma separated")
     args = parser.parse_args()
 
-    # Define extension
-    extension = '.py' if args.language == 'python' else '.php'
-
     # List filenames
-    all_files = [x for x in parse(args.path, extension, args.exclude)]
+    all_files = [x for x in parse(args.path, args.language, args.exclude)]
 
     # Search all functions by filenames
     functions_by_file = find_all_functions(all_files, args.language)

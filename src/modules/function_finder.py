@@ -2,6 +2,7 @@
 import re
 
 from .directory_parser import parse
+from .supported_languages import get_function_definition_pattern, get_magic_method_format
 
 
 def find_functions(file_path, language='python'):
@@ -15,13 +16,8 @@ def find_functions(file_path, language='python'):
             return []
 
     # Find all functions
-    if language == 'python':
-        # Python
-        functions = re.findall(r'def\s(\w+)\(', file_content)
-    elif language == 'php':
-        functions = re.findall(r'function\s+([^\s\(]+)\s*\(', file_content)
-    else:
-        raise NotImplementedError
+    functions = re.findall(
+        get_function_definition_pattern(language), file_content)
 
     # Remove magic methods
     functions = remove_magic_methods(functions, language)
@@ -45,17 +41,13 @@ def find_all_functions(files, language='python'):
 def remove_magic_methods(functions, language='python'):
     """ Remove magic methods from a list of functions """
 
+    magic_method_format = get_magic_method_format(language)
+
     # Remove magic methods
     result = []
     for function in functions:
 
-        if language == 'python':
-            if function.startswith('__') and function.endswith('__'):
-                continue
-        elif language == 'php':
-            if function.startswith('__'):
-                continue
-
-        result.append(function)
+        if not re.match(magic_method_format, function):
+            result.append(function)
 
     return result

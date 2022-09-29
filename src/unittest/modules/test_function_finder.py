@@ -47,7 +47,7 @@ class Test(unittest.TestCase):
         path = os.getcwd() + '/../assets/test_codebase/python/'
 
         # Get functions
-        all_files = [x for x in directory_parser.parse(path, '.py')]
+        all_files = [x for x in directory_parser.parse(path, 'python')]
         functions_by_file = function_finder.find_all_functions(
             all_files, 'python')
 

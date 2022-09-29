@@ -11,7 +11,7 @@ class Test(unittest.TestCase):
         os.chdir(os.path.dirname(__file__))
 
         parsed = directory_parser.parse(
-            os.getcwd() + '/../assets/test_codebase/python', '.py')
+            os.getcwd() + '/../assets/test_codebase/python', 'python')
         assert isinstance(parsed, types.GeneratorType)
 
         i = 0
@@ -25,7 +25,7 @@ class Test(unittest.TestCase):
         os.chdir(os.path.dirname(__file__))
 
         parsed = directory_parser.parse(
-            os.getcwd() + '/../assets/test_codebase/python', '.py', exclude='sub_dir/')
+            os.getcwd() + '/../assets/test_codebase/python', 'python', exclude='sub_dir/')
         assert isinstance(parsed, types.GeneratorType)
         assert len([x for x in parsed]) == 2
 
