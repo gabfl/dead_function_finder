@@ -1,0 +1,40 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9']
+        postgresql-version: ['10', '11', '12', '13', '14', '15']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+      - name: Install Python dependencies
+        run: |
+          pip install -U pip
+          pip install pycodestyle codecov pytest
+      - name: Display Python dependencies
+        run: |
+          pip3 freeze
+      - name: Run pycodestyle
+        run: |
+          pycodestyle --exclude=venv --ignore=E501 .
+      - name: Run pytest
+        run: |
+          coverage run --source=. -m pytest
+      - name: Generate coverage report
+        run: |
+          coverage report -m
+      - name: Report to codecov
+        run: |
+          codecov
