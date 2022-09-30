@@ -1,5 +1,4 @@
 import unittest
-import types
 import os
 
 from ...modules import directory_parser
@@ -12,7 +11,7 @@ class Test(unittest.TestCase):
 
         parsed = directory_parser.parse(
             os.getcwd() + '/../assets/test_codebase/python', 'python')
-        assert isinstance(parsed, types.GeneratorType)
+        assert isinstance(parsed, list)
 
         i = 0
         for full_path in parsed:
@@ -26,13 +25,12 @@ class Test(unittest.TestCase):
 
         parsed = directory_parser.parse(
             os.getcwd() + '/../assets/test_codebase/python', 'python', exclude='sub_dir/')
-        assert isinstance(parsed, types.GeneratorType)
+        assert isinstance(parsed, list)
         assert len([x for x in parsed]) == 2
 
     def test_parse_not_found(self):
-        # with self.assertRaises(FileNotFoundError):
-        #     directory_parser.parse('/tmp/dir/not_found', '.php')
-        pass
+        with self.assertRaises(FileNotFoundError):
+            res = directory_parser.parse('/this/path/is/invalid', 'python')
 
     def test_resolve_home_path(self):
         path = directory_parser.resolve_home_path('~/')

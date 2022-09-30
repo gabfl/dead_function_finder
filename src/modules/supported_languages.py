@@ -1,14 +1,16 @@
 languages = {
     'python': {
-        'search_pattern_start': r'(\.|\s)',
-        'search_pattern_end': '(\s)?\(',
+        # see https://regex101.com/r/1ZiRBM/1
+        'search_pattern_start': r'^(?!def)(.*)(^|\)|\s|=|\(|\.|!|@)',
+        'search_pattern_end': r'(\s?)\(',
         'function_definition_pattern': r'def\s(\w+)\(',
         'magic_method_format': r'^__.*__$',
         'extension': '.py'
     },
     'php': {
-        'search_pattern_start': r'(>|::)',
-        'search_pattern_end': '(\s)?\(',
+        # see https://regex101.com/r/7YVqUM/1
+        'search_pattern_start': r'^(?!function)(.*)(->|::|^|\)|\s|=|\(|\.|!)',
+        'search_pattern_end': r'(\s?)\(',
         'function_definition_pattern': r'function\s+([^\s\(]+)\s*\(',
         'magic_method_format': r'^__.*$',
         'extension': '.php'

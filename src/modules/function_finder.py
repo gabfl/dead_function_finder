@@ -22,7 +22,7 @@ def find_functions(file_path, language='python'):
     # Remove magic methods
     functions = remove_magic_methods(functions, language)
 
-    return functions
+    return list(set(functions))
 
 
 def find_all_functions(files, language='python'):

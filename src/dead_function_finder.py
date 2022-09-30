@@ -29,16 +29,21 @@ def main():
                                                       "{:,.0f}".format(len(functions_by_file))))
 
     # Search all functions in all files
-    for file in functions_by_file:
+    count = 0
+    for file_path in functions_by_file:
         # All functions in file
-        functions = functions_by_file[file]
+        functions = functions_by_file[file_path]
 
         # Loop through all functions
         for function in functions:
             res = iterate_and_search(function, all_files, args.language)
 
             if not res:
-                print(' * Function {} not found in any file.'.format(function))
+                count += 1
+                print(
+                    '   -> Function `{}` from `{}` not found in any file.'.format(function, file_path))
+
+    print(' * Found {} dead functions.'.format("{:,.0f}".format(count)))
 
     return None
 

@@ -16,7 +16,7 @@ def search_function_in_file(function_name, file_path, language='python'):
     start, end = get_search_pattern(language)
 
     # Find all functions
-    found = re.search(start + function_name + end, file_content)
+    found = re.search(start + function_name + end, file_content, re.MULTILINE)
 
     return True if found else False
 

@@ -25,6 +25,7 @@ def parse(path, language='python', exclude=None):
 
     exclusions = (exclude).split(',') if exclude else []
 
+    result = []
     for file in files:
         # Skip directories with extensions
         if not os.path.isfile(file):
@@ -34,7 +35,9 @@ def parse(path, language='python', exclude=None):
         if is_excluded(file, exclusions):
             continue
 
-        yield file
+        result.append(file)
+
+    return result
 
 
 def resolve_home_path(path):
@@ -50,7 +53,7 @@ def is_excluded(file, exclusions):
     """ Check if file contains an excluded pattern """
 
     for exclusion in exclusions:
-        if exclusion in file:
+        if exclusion and exclusion.strip() in file:
             return True
 
     return False

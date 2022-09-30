@@ -38,8 +38,8 @@ class Test(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             supported_languages.get_magic_method_format('exe')
 
-    def test_get_search_pattern_(self):
-        assert supported_languages.get_search_pattern(
-            'python') == (r'(\.|\s)', '(\s)?\(')
+    def test_get_search_pattern(self):
+        assert isinstance(
+            supported_languages.get_search_pattern('python'), tuple)
         with self.assertRaises(NotImplementedError):
             supported_languages.get_search_pattern('exe')
