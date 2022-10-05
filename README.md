@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/gabfl/dead_function_finder/branch/main/graph/badge.svg)](https://codecov.io/gh/gabfl/dead_function_finder)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://raw.githubusercontent.com/gabfl/dead_function_finder/main/LICENSE)
 
-Utility to find dead functions within a codebase.
+Utility to locate functions that are declared but never used in a codebase.
 
 ## Languages supported
 
