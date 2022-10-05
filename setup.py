@@ -4,7 +4,7 @@ import pypandoc
 
 setup(
     name='dead_function_finder',
-    version='1.0',
+    version='1.1',
     description='Utility to find dead functions within a codebase.',
     long_description=pypandoc.convert_file('README.md', 'rst'),
     author='Gabriel Bordeaux',
