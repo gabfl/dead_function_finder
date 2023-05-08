@@ -21,7 +21,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install -U pip
-          pip install pycodestyle codecov pytest
+          pip install pycodestyle coverage pytest
       - name: Display Python dependencies
         run: |
           pip3 freeze
